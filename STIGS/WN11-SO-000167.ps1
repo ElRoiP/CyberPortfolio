@@ -22,4 +22,4 @@ $Value     = "O:BAG:BAD:(A;;RC;;;BA)"
 
 if (-not (Test-Path $RegPath)) { New-Item -Path $RegPath -Force | Out-Null }
 Set-ItemProperty -Path $RegPath -Name $ValueName -Value $Value -Force
-Write-Host "✔ STIG Enforcement Complete." -ForegroundColor Green
+Write-Host "STIG Enforcement Complete." -ForegroundColor Green
