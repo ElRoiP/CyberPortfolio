@@ -32,4 +32,4 @@ if (-not (Test-Path $RegPath)) {
 # Set (or overwrite) the registry value
 Set-ItemProperty -Path $RegPath -Name $ValueName -Value $Value -Force
 
-Write-Host "✔ STIG Enforcement Complete." -ForegroundColor Green
+Write-Host "STIG Enforcement Complete." -ForegroundColor Green
