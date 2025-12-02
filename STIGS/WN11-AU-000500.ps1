@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Ensures that the registry value '$ValueName' at '$RegPath' is set to '$Value'.
+    Ensures that the registry value 'MaxSize' at 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\EventLog\Application' is set to '0x00008000'.
 .NOTES
     Author          : El Roi Pablo
     LinkedIn        : linkedin.com/in/Elroipablo/
