@@ -20,6 +20,13 @@ $RegPath   = "HKLM:\SOFTWARE\Policies\Microsoft\Power\PowerSettings\0e796bdb-100
 $ValueName = "DCSettingIndex"
 $Value     = 1
 
-if (-not (Test-Path $RegPath)) { New-Item -Path $RegPath -Force | Out-Null }
+# Ensure the registry key exists
+if (-not (Test-Path $RegPath))
+{
+    New-Item -Path $RegPath -Force | Out-Null
+}
+
+# Set (or overwrite) the registry value
 Set-ItemProperty -Path $RegPath -Name $ValueName -Value $Value -Force
+
 Write-Host "STIG Enforcement Complete." -ForegroundColor Green

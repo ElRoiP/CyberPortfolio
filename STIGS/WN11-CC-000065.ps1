@@ -16,10 +16,17 @@
     PS C:\> .\WN11-CC-000065.ps1
 #>
 
-$RegPath   = "HKLM:\SOFTWARE\Microsoft\WcmSvc\wifinetworkmanager\config"
+$RegPath = "HKLM:\SOFTWARE\Microsoft\WcmSvc\wifinetworkmanager\config"
 $ValueName = "AutoConnectAllowedOEM"
-$Value     = 0
+$Value = 0
 
-if (-not (Test-Path $RegPath)) { New-Item -Path $RegPath -Force | Out-Null }
+# Ensure the registry key exists
+if (-not (Test-Path $RegPath))
+{
+    New-Item -Path $RegPath -Force | Out-Null
+}
+
+# Set (or overwrite) the registry value
 Set-ItemProperty -Path $RegPath -Name $ValueName -Value $Value -Force
+
 Write-Host "STIG Enforcement Complete." -ForegroundColor Green
