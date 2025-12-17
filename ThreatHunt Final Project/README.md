@@ -1,5 +1,7 @@
 # ThreatHunt Final Project
 
+<img width="240" height="145" alt="image" src="https://github.com/user-attachments/assets/c0f90657-56a2-419c-9fe1-34e99059197c" />
+
 # Threat Hunt Report: Unauthorized TOR Usage
 
 **Detection of Unauthorized TOR Browser Installation and Use on workstaion: Palps-MDE-test**
