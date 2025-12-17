@@ -4,6 +4,14 @@
 
 **Detection of Unauthorized TOR Browser Installation and Use on workstaion: Palps-MDE-test**
 
+[Threat Event Scenario Creation](https://github.com/ElRoiP/CyberPortfolio/blob/main/ThreatHunt%20Final%20Project/Threat%20Event%20Scenario.md)
+
+## Platforms and Languages Leveraged:
+- Windows 10 Virtual Machines (Microsoft Azure)
+- EDR Platform: Microsoft Defender for Endpoint
+- Kusto Query Language (KQL)
+- Tor Browser
+
 ## Scenario:
 
 Management suspects that some employees may be using TOR browsers to bypass network security controls because recent network logs show unusual encrypted traffic patterns and connections to known TOR entry nodes. Additionally, there have been anonymous reports of employees discussing ways to access restricted sites during work hours. The goal is to detect any TOR usage and analyze related security incidents to mitigate potential risks.
@@ -18,12 +26,12 @@ Management suspects that some employees may be using TOR browsers to bypass netw
 
 ---
 
-## Steps Taken
+## Steps Taken:
 
 1. Searched `DeviceFileEvents` table for any file that had the string “tor” in it and discovered  that the user `palps` has downloaded a tor installer, which triggered a series of tor-related files in the desktop which includes a file called `tor-shopping-list.txt`on `2025-12-16T17:25:32.2986722Z`. These events began at `2025-12-16T16:11:38.353237Z` .
 Query used to locate events:
     
-    ```sql
+    ```kql
     DeviceFileEvents
     | where DeviceName == "palps-mde-test"
     | where FileName startswith "tor"
@@ -38,7 +46,7 @@ Query used to locate events:
 2. Searched the `DeviceProcessEvents` table for any `ProcessCommandLine` that contained the string `tor-browser-windows-x86_64-portable-15.0.3.exe` . Based in the logs returned at `2025-12-16T17:12:29.2835373Z` , the user `palps` on the `palps-mde-test` device ran the file executed the command to silently install the file.
 Query to locate events:
     
-    ```sql
+    ```kql
     DeviceProcessEvents
     | where DeviceName == "palps-mde-test"
     | where ProcessCommandLine contains "tor-browser-windows-x86_64-portable-15.0.3.exe"
@@ -50,7 +58,7 @@ Query to locate events:
 3. Searched the `DeviceProcessEvents` table for any indication that the user `palps` has launched the the tor browser. Evidence from the logs indicates that they have launcehd an instance of `tor.exe` on`2025-12-16T17:16:21.0596319Z` and `firefox.exe` (tor) on `2025-12-16T17:16:12.0828789Z` 
 Query to locate events:
     
-    ```
+    ```kql
     DeviceProcessEvents
     | where DeviceName == "palps-mde-test"
     | where ProcessCommandLine has_any("tor.exe","firefox.exe")
@@ -62,7 +70,7 @@ Query to locate events:
 4. Searched the `DeviceNetworkEvents` table for any indication the tor browser was used to establish any connection using any of the known tor ports. Logs show that the user has successfully connected on `2025-12-16T17:17:23.7586533Z` to the remote IP address `162.220.14.54` on port `9001` initiated by `tor.exe`. There were other multiple remote IPs the user has successfully connected to afterwards.
 Query to locate events:
     
-    ```
+    ```kql
     DeviceNetworkEvents
     | where DeviceName == "palps-mde-test"
     | where InitiatingProcessFileName in~ ("tor.exe", "firefox.exe")
@@ -76,7 +84,7 @@ Query to locate events:
 5. Search the `DeviceFileEvents` table if any files were created while user was browsing via tor and logs show that a `tor-shopping-list.txt` was created and modified on `2025-12-16T17:25:31.9864719Z`. 
 Query to locate events:
     
-    ```
+    ```kql
     DeviceFileEvents
     | where FileName contains "shopping-list.txt"
     | order by Timestamp desc 
@@ -88,7 +96,7 @@ Query to locate events:
 
 ---
 
-## Chronological Events
+## Chronological Events:
 
 ### 1. Tor Files Downloaded
 
@@ -122,7 +130,7 @@ While Tor was in use, DeviceFileEvents shows the file `tor-shopping-list.txt` wa
 
 ---
 
-## Summary
+## Summary:
 
 - Tor Browser was downloaded, silently installed, launched, and actively used.
 - The endpoint established multiple connections to the Tor network.
@@ -134,7 +142,7 @@ This investigation confirms intentional and active Tor Browser usage by user `pa
 
 ---
 
-## Response Taken
+## Response Taken:
 
 TOR usage was confirmed on endpoint `palps-mde-test` by the user `palps`. The device was isolated and the user’s direct manager was notified.
 
@@ -151,5 +159,3 @@ TOR usage was confirmed on endpoint `palps-mde-test` by the user `palps`. The de
 | **Version** | **Changes** | **Date** | **Modified By** |
 | --- | --- | --- | --- |
 | 1.0 | Initial draft | `December  16, 2025` | `El Roi Pablo` |
-
-[Threat Event (Unauthorized TOR Usage)](https://www.notion.so/Threat-Event-Unauthorized-TOR-Usage-2cb8eb863b828186bd13cf64285060c3?pvs=21)
