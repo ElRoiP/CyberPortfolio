@@ -43,7 +43,8 @@ Query used to locate events:
     | project Timestamp, DeviceName, ActionType, FileName, FolderPath, SHA256, Account = InitiatingProcessAccountName
     ```
     
-    ![image.png](image.png)
+    <img width="1582" height="376" alt="image" src="https://github.com/user-attachments/assets/634d0a80-6fee-4c71-ba75-a20d536488e5" />
+
     
 2. Searched the `DeviceProcessEvents` table for any `ProcessCommandLine` that contained the string `tor-browser-windows-x86_64-portable-15.0.3.exe` . Based in the logs returned at `2025-12-16T17:12:29.2835373Z` , the user `palps` on the `palps-mde-test` device ran the file executed the command to silently install the file.
 Query to locate events:
@@ -55,7 +56,8 @@ Query to locate events:
     | project Timestamp, DeviceName, AccountName, ActionType, FileName, ProcessCommandLine
     ```
     
-    ![image.png](image%201.png)
+    <img width="653" height="239" alt="image" src="https://github.com/user-attachments/assets/313a5f5f-298f-46da-bc9e-26ad4f5ca834" />
+
     
 3. Searched the `DeviceProcessEvents` table for any indication that the user `palps` has launched the the tor browser. Evidence from the logs indicates that they have launcehd an instance of `tor.exe` on`2025-12-16T17:16:21.0596319Z` and `firefox.exe` (tor) on `2025-12-16T17:16:12.0828789Z` 
 Query to locate events:
@@ -67,7 +69,8 @@ Query to locate events:
     | project  Timestamp, DeviceName, AccountName, ActionType, SHA256, ProcessCommandLine
     ```
     
-    ![image.png](image%202.png)
+    <img width="2006" height="366" alt="image" src="https://github.com/user-attachments/assets/8f5a96ea-48b4-4b5a-919a-f018002abfed" />
+
     
 4. Searched the `DeviceNetworkEvents` table for any indication the tor browser was used to establish any connection using any of the known tor ports. Logs show that the user has successfully connected on `2025-12-16T17:17:23.7586533Z` to the remote IP address `162.220.14.54` on port `9001` initiated by `tor.exe`. There were other multiple remote IPs the user has successfully connected to afterwards.
 Query to locate events:
@@ -81,7 +84,8 @@ Query to locate events:
     | order by Timestamp desc
     ```
     
-    ![image.png](image%203.png)
+    <img width="1454" height="316" alt="image" src="https://github.com/user-attachments/assets/b692d065-7a77-4640-8f79-ed5b663b89be" />
+
     
 5. Search the `DeviceFileEvents` table if any files were created while user was browsing via tor and logs show that a `tor-shopping-list.txt` was created and modified on `2025-12-16T17:25:31.9864719Z`. 
 Query to locate events:
@@ -93,7 +97,8 @@ Query to locate events:
     | project Timestamp, DeviceName, FileName, ActionType, FolderPath
     ```
     
-    ![image.png](image%204.png)
+    <img width="1083" height="124" alt="image" src="https://github.com/user-attachments/assets/dc091179-6e76-4771-a507-19f7f2e29f4a" />
+
     
 
 ---
