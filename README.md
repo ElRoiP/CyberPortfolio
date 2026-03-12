@@ -13,4 +13,6 @@ Welcome to my cybersecurity project portfolio! This repository showcases hands-o
 
 [Threat Hunting Scenario (Tor Browser Usage)](https://github.com/ElRoiP/CyberPortfolio/tree/main/ThreatHunt%20Final%20Project)
 
+[Threat Hunt Lab](https://github.com/ElRoiP/CyberPortfolio/tree/main/ThreatHuntLabs/Azuki-Series/Part1-Port-Of-Entry)
+
 ---
